@@ -24,7 +24,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r Sravanv1989/.github-workflows/requirements.txt  # Replace with your requirements file
+        pip install -r .github/workflows/requirements.txt 
 
     - name: Run pytest
       run: pytest Sravanv1989/.github-workflows/test_vue9.py
