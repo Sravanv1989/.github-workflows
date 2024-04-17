@@ -27,4 +27,4 @@ jobs:
         pip install -r .github/workflows/requirements.txt 
 
     - name: Run pytest
-      run: pytest Sravanv1989/.github-workflows/test_vue9.py
+      run: pytest .github/workflows/test_vue9.py
