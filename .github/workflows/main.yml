@@ -16,15 +16,19 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.x
-
-    - name: Install dependencies
+    - name: Install necessary dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install -r .github/workflows/requirements.txt 
+        sudo apt-get update && sudo apt-get install -y wget \
+        && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - \
+        && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list \
+        && sudo apt-get update \
+        && sudo apt-get install -y google-chrome-stable \
+        && wget -O /tmp/chromedriver.zip "https://chromedriver.storage.googleapis.com/123.0.6312.86/chromedriver_linux64.zip" \
+        && sudo unzip /tmp/chromedriver.zip -d /usr/local/bin \
+        && sudo rm /tmp/chromedriver.zip \
+        && sudo chmod +x /usr/local/bin/chromedriver \
+        && python -m pip install --upgrade pip \
+        && pip install -r .github/workflows/requirements.txt 
 
     - name: Run pytest
       run: pytest .github/workflows/test_vue9.py
