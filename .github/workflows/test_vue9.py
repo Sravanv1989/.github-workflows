@@ -61,7 +61,8 @@ def setup(request):
 
     # Specify the correct path to ChromeDriver executable
     chromedriver_path = "/usr/local/bin/chromedriver"
-
+    # Print out the ChromeDriver path for debugging
+    print("ChromeDriver path:", chromedriver_path)
     # Initialize Chrome webdriver with chromedriver service
     service = Service(chromedriver_path)
     driver = webdriver.Chrome(service=service, options=chrome_options)
