@@ -1,0 +1,14 @@
+{
+    "BASE_URL": "http://54.165.200.40:3000/",
+    "USER": {
+        "correct_email": "pratiush@pinacalabs.com",
+        "correct_password": "pratiush",
+        "incorrect_email": "amuji@gmail.com",
+        "incorrect_password": "ji",
+        "invalid_username": " ",
+        "invalid_password": " ",
+        "search_word": "Ground force",
+        "search_letter": "A",
+        "semantic_search-word": "india china border"
+    }
+}
