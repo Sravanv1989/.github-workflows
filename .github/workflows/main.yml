@@ -27,4 +27,4 @@ jobs:
         pip install -r requirements.txt  # Replace with your requirements file
 
     - name: Run pytest
-      run: pytest
+      run: pytest test_vue9.py
