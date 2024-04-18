@@ -5,6 +5,7 @@ import datetime
 import logging
 import time
 import traceback
+import platform
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -49,9 +50,10 @@ logger.addHandler(log_handler)
 
 @pytest.fixture()
 def setup(request):
-     # Initialize Xvfb display
-    display = Display(visible=0, size=(1920, 1080))
-    display.start()
+    # Initialize Xvfb display if not running on Windows
+    if platform.system() != 'ubuntu':
+        display = Display(visible=0, size=(1920, 1080))
+        display.start()
 
     # ChromeOptions with headless mode
     chrome_options = Options()
@@ -59,10 +61,15 @@ def setup(request):
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
 
-    # Specify the correct path to ChromeDriver executable
-    chromedriver_path = "/usr/local/bin/chromedriver"
-    # Print out the ChromeDriver path for debugging
-    print("ChromeDriver path:", chromedriver_path)
+    # Specify the path to ChromeDriver executable
+    chromedriver_path = os.getenv('CHROMEDRIVER_PATH', '/usr/local/bin/chromedriver-linux64/chromedriver')
+
+    # Specify the path to Chrome binary
+    chrome_binary_path = os.getenv('CHROME_BINARY_PATH', None)
+
+    if chrome_binary_path:
+        chrome_options.binary_location = chrome_binary_path
+
     # Initialize Chrome webdriver with chromedriver service
     service = Service(chromedriver_path)
     driver = webdriver.Chrome(service=service, options=chrome_options)
