@@ -8,7 +8,8 @@ on:
     branches:
       - main
   schedule:
-    - cron: '30 12 * * *'  # Runs every day at midnight (UTC)
+    - cron: '25 7 * * *'  # Run at 12:55 IST (07:25 UTC)
+
 
 
 jobs:
