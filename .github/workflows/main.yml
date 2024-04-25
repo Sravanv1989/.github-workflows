@@ -1,12 +1,8 @@
-name: pytest
+name: Scheduled Workflow
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  schedule:
+    - cron: '21 12 * * *'  # Runs every day at midnight (UTC)
 
 jobs:
   test:
