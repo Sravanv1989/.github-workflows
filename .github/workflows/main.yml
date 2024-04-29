@@ -8,7 +8,8 @@ on:
     branches:
       - main
   schedule:
-    - cron: '50 8 * * *'  # Run at 12:55 IST (07:25 UTC)
+    - cron: '30 4 * * *'  # Run at 12:55 IST (07:25 UTC)
+    - cron: '00 13 * * *'  # Run at 12:55 IST (07:25 UTC)
 
 
 
