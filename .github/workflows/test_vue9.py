@@ -18,6 +18,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver import ChromeOptions
 from pyvirtualdisplay import Display
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
 
 # Get the absolute path to the directory of this script
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -47,6 +49,18 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 logger.addHandler(log_handler)
 # CHROMEDRIVER_PATH = "/usr/local/bin/chromedriver"  # Update with your chromedriver path
+def send_log_to_slack(file_path, token, channel):
+    client = WebClient(token=token)
+    try:
+        response = client.files_upload(
+            channels=channel,
+            file=file_path,
+            title="Test Log File",
+            initial_comment="Here is the log file from the latest test run."
+        )
+        logger.info("Log file sent to Slack successfully.")
+    except SlackApiError as e:
+        logger.error(f"Failed to send log file to Slack: {e.response['error']}")
 
 @pytest.fixture()
 def setup(request):
@@ -82,6 +96,10 @@ def setup(request):
 
     # Quit the driver after the test
     driver.quit()
+@pytest.hookimpl(tryfirst=True)
+def pytest_sessionfinish(session, exitstatus):
+    # Send log file to Slack at the end of the pytest session
+    send_log_to_slack(log_file_path, SLACK_TOKEN, SLACK_CHANNEL)
 
 @pytest.mark.usefixtures("setup")
 class TestWebsite:        
