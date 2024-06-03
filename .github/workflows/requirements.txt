@@ -7,6 +7,7 @@ webdriver-manager==3.4.2
 werkzeug==2.0.3
 docker
 pyvirtualdisplay==3.0
+slack_sdk==3.18.0
 
 
 
